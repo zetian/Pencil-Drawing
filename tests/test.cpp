@@ -175,7 +175,6 @@ int main(){
             }
         }
     }
-
     Mat kern((ks*2 + 1), (ks*2 + 1), CV_32F, kern_data);
 
     std::vector<Mat> response;
@@ -187,6 +186,19 @@ int main(){
     }
     imshow("Display window", response[3]);
     waitKey(0);
+
+    std::vector<std::vector<int>> index;
+    for(int i = 0; i < image.cols; i++){
+        for (int j = 0; j < image.rows; j++){
+            for (int k = 0; k < response.size(); k++){
+                
+            }
+            
+        }
+    }
+
+
+
     // imshow("Display window", im_XY);
 
 
