@@ -55,17 +55,20 @@ int main(){
 
     
 
-    Mat image = origin_image;
+    Mat image, image_X, image_Y;
     origin_image.copyTo(image);
+    origin_image.copyTo(image_X);
+    origin_image.copyTo(image_Y);
     
     // image.convertTo(image, CV_64FC3);
     auto size = image.size();
     int num_channels = image.channels();
     
-    Mat image_X;
-    image_X = image;
-    Mat image_Y;
-    image_Y = image;
+    // Mat1f image_X(size.height, size.width);
+    // image_X = image;
+    // Mat image_Y;
+    // Mat1f image_Y(size.height, size.width);
+    // image_Y = image;
 
     Mat imX, imY, im_XY;
 
@@ -86,8 +89,8 @@ int main(){
     std::vector<Mat> channels_1(3);
     split(image_X, channels_1);
     Mat lumIm_X = channels_1[0];
-    imshow("Display window", lumIm_X);
-    waitKey(0);
+    // imshow("Display window", lumIm_X);
+    // waitKey(0);
     // Mat lumIm_2 = channels[1];
     // Mat lumIm_3 = channels[2];
 
@@ -97,11 +100,11 @@ int main(){
       for (int j = 0; j < image.rows; j++)
       {   
         // Vec3f pre_color = origin_image.at<Vec3b>(Point(i, j));
-        // Vec3f color = origin_image.at<Vec3b>(Point(i, j));
-        // Vec3f color_next = origin_image.at<Vec3b>(Point(i + 1, j));
-        // color[0] = std::abs(color[0] - color_next[0]);
+        Vec3f color = origin_image.at<Vec3b>(Point(i, j));
+        Vec3f color_next = origin_image.at<Vec3b>(Point(i + 1, j));
+        color[0] = std::abs(color[0] - color_next[0]);
 
-        // image_Y.at<Vec3b>(Point(i, j)) = color;
+        image_Y.at<Vec3b>(Point(i, j)) = color;
       }
     }
     std::vector<Mat> channels_2(3);
@@ -148,9 +151,9 @@ int main(){
     // // Sobel(lumIm_1, imY, ddepth, 0, 1, 1);
     // // convertScaleAbs(imX, imX);
     // // convertScaleAbs(imY, imY);
-    // addWeighted(imX, 1, imY, 1, 0, im_XY);
-
-
+    addWeighted(lumIm_X, 0.5, lumIm_Y, 0.5, 0, im_XY);
+    // imshow("Display window", im_XY);
+    // waitKey(0);
     int ks = 8;
     int num_dir = 8;
     int width = 1;
@@ -182,7 +185,8 @@ int main(){
         cv::filter2D(im_XY, dst, im_XY.depth(), kernel);
         response.push_back(dst);
     }
-
+    imshow("Display window", response[3]);
+    waitKey(0);
     // imshow("Display window", im_XY);
 
 
