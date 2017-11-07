@@ -285,13 +285,11 @@ int main(){
     for (int i = 1; i < num_dir; i++){
         Sp = Sp + Spn[i];
     }
-    // normalize(Sp, Sp, NORM_MINMAX);
+    // normalize(Sp, Sp, 205, 10, NORM_MINMAX, CV_8UC1);
 
     // cv::Mat img3;
     // Sp.convertTo(Sp, CV_32F, 1.0 / 255, 0);
     // normalize(Sp, Sp, 1, 0,NORM_MINMAX);
-    // normalize(Sp, Sp, 255,0);
-    Sp.convertTo(Sp, CV_8UC1, 255.0);
     // double min, max;
     // minMaxLoc(Sp, &min, &max);
     // std::cout << "~~QQQ" << min << "~~QQQ"  <<max << std::endl;
@@ -309,16 +307,18 @@ int main(){
             }
         }
     }
+    std::cout << "~~QQQ" << min << "~~QQQ"  <<max << std::endl;
+    for(int i = 0; i < image.cols; i++){
+        for (int j = 0; j < image.rows; j++){
+            Vec3f color = Sp.at<Vec3b>(Point(i, j));
 
-    // cvtColor(Sp, Sp, COLOR_YCrCb2GREY);
-    // std::cout << "~~QQQ" << min << "~~QQQ"  <<max << std::endl;
-    // for(int i = 0; i < image.cols; i++){
-    //     for (int j = 0; j < image.rows; j++){
-    //         Vec3f color = Sp.at<Vec3b>(Point(i, j));
-    //         color[0] = int((color[0] - min)*(min/max)*255 + 0.5);
-    //         Sp.at<Vec3b>(Point(i, j)) = color;
-    //     }
-    // }
+            color[0] = color[0] - min;
+            color[1] = 0;
+            color[2] = 0;
+            // color[0] = int((color[0] - min)*(min/max) + 0.5);
+            Sp.at<Vec3b>(Point(i, j)) = color;
+        }
+    }
 
     imshow("Display window", Sp);
     waitKey(0);
