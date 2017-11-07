@@ -8,7 +8,7 @@ find_package(OpenCV REQUIRED)
 
 # Add libraries
 set(PENCIL_DRAWING
-	get_stroke.cpp
+	pencil_drawing.cpp
 )
 add_library(pencil STATIC ${PENCIL_DRAWING})
 target_link_libraries(pencil ${OpenCV_LIBS})

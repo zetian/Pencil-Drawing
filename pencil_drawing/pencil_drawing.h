@@ -5,8 +5,12 @@
 
 using namespace cv;
 
-
-class Stroke{
-
+class PencelDrawing{
+public:
+    PencelDrawing(){};
+    ~PencelDrawing(){};
+public:
+    Mat getGrad(Mat source);
+    Mat imRotate(const Mat source, double angle);
 };
 
